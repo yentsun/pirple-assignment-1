@@ -11,7 +11,7 @@ const server = http.createServer(async (req, res) => {
     res.sendDate = true;
     if (method === 'POST' && trimmedPath === 'hello') {
 
-        // make sure client understands JSON payload requirement
+        // talk the client into sending JSON payload
         const contentType = req.headers['content-type'];
         if (contentType !== 'application/json') {
             res.writeHead(200);
@@ -24,6 +24,7 @@ const server = http.createServer(async (req, res) => {
         req.on('data', (data) => {
             buffer += decoder.write(data);
         });
+
         // use a promise to further use async keyword and
         // move the rest of body parsing out of `end` event handler
         const bodyReady = new Promise(resolve => {
